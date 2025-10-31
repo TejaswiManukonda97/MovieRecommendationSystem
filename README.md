@@ -1,75 +1,62 @@
 # MovieRecommendationSystem
-Recommend 10 movies that are similar to the input based on plot, genre and ratings
 
-This repository contains the foundational structure for the Recommendation System Inference API built with FastAPI and containerized with Docker, ready for deployment in a CI/CD pipeline.
+Recommend 10 movies similar to an input movie using plot, genre, and ratings.
 
-Local Setup (macOS)
+This repository contains a FastAPI-based inference API for a movie recommendation system. The project is Docker-ready and intended for use in CI/CD deployment pipelines.
 
-Prerequisites
+## Features
 
-You must have the following installed on your Mac:
+- Return top-N (default 10) movie recommendations based on plot embeddings, genres, and ratings
+- Lightweight FastAPI inference service
+- Dockerfile included for containerized deployment
 
-Python 3.10+
+---
 
-pip (Python package installer)
+## Prerequisites (macOS)
 
-virtualenv or similar tool (optional, but highly recommended)
+- Python 3.10+
+- pip
+- virtualenv (recommended)
+- Docker Desktop (for containerized runs)
 
-Docker Desktop
+---
 
-1. Set up Python Environment (Recommended)
+## Quickstart — Local (development)
 
-Create and activate a virtual environment to manage dependencies cleanly.
+1. Create and activate a virtual environment (recommended)
 
-# Create a virtual environment
+```bash
 python3 -m venv .venv
-# Activate the environment
 source .venv/bin/activate
+```
 
+2. Install dependencies
 
-2. Install Dependencies
-
-Install all required Python packages listed in requirements.txt:
-
+```bash
 pip install -r requirements.txt
+```
 
+3. Run the API with hot-reload
 
-3. Run Locally (without Docker)
-
-For rapid development with hot-reloading:
-
-# The 'main' is the file (app/main.py, but Python finds it as main when in a venv/app context)
-# The 'app' is the FastAPI instance (app = FastAPI())
-# The '--reload' flag enables automatic server restart on file changes
+```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
+Open:
+- API: http://127.0.0.1:8000
 
-The API will be running at http://127.0.0.1:8000. Open http://127.0.0.1:8000/docs to see the interactive API documentation (Swagger UI).
+---
 
-🐳 Docker Setup
+## Quickstart — Docker
 
-Containerizing the application ensures your local environment exactly matches the future cloud environment, which is crucial for MLOps.
+1. Build the image (run from repo root)
 
-1. Build the Docker Image
-
-Run this command from the root directory (mlops-recommendation-api/):
-
+```bash
 docker build -t recommendation-api:local .
+```
 
+2. Run the container
 
-2. Run the Docker Container
-
-Run the image, mapping the container's internal port 8000 to your Mac's local port 8000:
-
+```bash
 docker run -d -p 8000:8000 --name recommendation-api-container recommendation-api:local
-
-
-3. Test the API
-
-Access the documentation at: http://localhost:8000/docs
-
-You can test the /predict endpoint using curl:
-
-curl -X POST "http://localhost:8000/predict" \
--H "Content-Type: application/json" \
--d '{"user_id": "test_user_001", "feature_vector": [1.0, 1.0]}'
+```
