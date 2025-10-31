@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+gensim
+faiss-cpu
+pandas
+scikit-learn
+pydantic
+nltk
